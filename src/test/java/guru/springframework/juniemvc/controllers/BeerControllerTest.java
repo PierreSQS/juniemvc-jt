@@ -8,10 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
@@ -25,29 +23,20 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class BeerControllerTest {
 
-    @TestConfiguration
-    static class TestConfig {
-        @Bean
-        @Primary
-        public BeerService beerService() {
-            return mock(BeerService.class);
-        }
-    }
-
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
+    @MockitoBean
     private BeerService beerService;
 
     @Autowired
@@ -90,7 +79,8 @@ class BeerControllerTest {
                 .andExpect(jsonPath("$[0].id", is(1)))
                 .andExpect(jsonPath("$[0].beerName", is("Test Beer")))
                 .andExpect(jsonPath("$[1].id", is(2)))
-                .andExpect(jsonPath("$[1].beerName", is("Another Beer")));
+                .andExpect(jsonPath("$[1].beerName", is("Another Beer")))
+                .andDo(print());
     }
 
     @Test
@@ -102,7 +92,8 @@ class BeerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.beerName", is("Test Beer")))
-                .andExpect(jsonPath("$.beerStyle", is("IPA")));
+                .andExpect(jsonPath("$.beerStyle", is("IPA")))
+                .andDo(print());
     }
 
     @Test
@@ -111,7 +102,8 @@ class BeerControllerTest {
 
         mockMvc.perform(get("/api/v1/beers/999")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andDo(print());
     }
 
     @Test
@@ -141,7 +133,8 @@ class BeerControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", is(3)))
                 .andExpect(jsonPath("$.beerName", is("New Beer")))
-                .andExpect(jsonPath("$.beerStyle", is("Stout")));
+                .andExpect(jsonPath("$.beerStyle", is("Stout")))
+                .andDo(print());
     }
 
     @Test
@@ -196,7 +189,8 @@ class BeerControllerTest {
         mockMvc.perform(put("/api/v1/beers/999")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(updatedBeer)))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andDo(print());
     }
 
     @Test
@@ -214,6 +208,7 @@ class BeerControllerTest {
 
         mockMvc.perform(delete("/api/v1/beers/999")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andDo(print());
     }
 }
