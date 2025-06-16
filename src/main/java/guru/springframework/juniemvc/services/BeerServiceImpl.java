@@ -3,6 +3,7 @@ package guru.springframework.juniemvc.services;
 import guru.springframework.juniemvc.entities.Beer;
 import guru.springframework.juniemvc.repositories.BeerRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,11 +30,13 @@ public class BeerServiceImpl implements BeerService {
         return beerRepository.findById(id);
     }
 
+    @Transactional
     @Override
     public Beer saveBeer(Beer beer) {
         return beerRepository.save(beer);
     }
 
+    @Transactional
     @Override
     public Optional<Beer> updateBeer(Integer id, Beer beer) {
         return beerRepository.findById(id)
@@ -50,6 +53,7 @@ public class BeerServiceImpl implements BeerService {
                 });
     }
 
+    @Transactional
     @Override
     public boolean deleteBeerById(Integer id) {
         if (beerRepository.existsById(id)) {
