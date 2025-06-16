@@ -54,4 +54,29 @@ public class BeerController {
         beer.setId(null);
         return beerService.saveBeer(beer);
     }
+
+    /**
+     * Update an existing beer
+     * @param id The beer ID
+     * @param beer The updated beer data
+     * @return ResponseEntity containing the updated beer if found, or 404 if not found
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<Beer> updateBeer(@PathVariable Integer id, @RequestBody Beer beer) {
+        return beerService.updateBeer(id, beer)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    /**
+     * Delete a beer by its ID
+     * @param id The beer ID
+     * @return ResponseEntity with no content if deleted, or 404 if not found
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBeer(@PathVariable Integer id) {
+        return beerService.deleteBeerById(id)
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
+    }
 }
