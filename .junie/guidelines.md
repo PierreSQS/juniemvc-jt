@@ -40,31 +40,31 @@ src/
 1. **Prerequisites**: Java 21, Maven 3.9.6+
 2. **Build the application**:
    ```
-   mvn clean install
+   .\mvnw.cmd clean install
    ```
 3. **Run the application**:
    ```
-   mvn spring-boot:run
+   .\mvnw.cmd spring-boot:run
    ```
 4. **Access the API**: The REST API is available at `http://localhost:8080/api/v1/beers`
 
 ## Testing
 1. **Run all tests**:
    ```
-   mvn test
+   .\mvnw.cmd test
    ```
 2. **Run specific test class**:
    ```
-   mvn test -Dtest=BeerControllerTest
+   .\mvnw.cmd test -Dtest=BeerControllerTest
    ```
 3. **Test endpoints with curl**:
    ```
    # Get all beers
    curl http://localhost:8080/api/v1/beers
-   
+
    # Get beer by ID
    curl http://localhost:8080/api/v1/beers/1
-   
+
    # Create new beer
    curl -X POST http://localhost:8080/api/v1/beers -H "Content-Type: application/json" -d '{"beerName":"Test Beer","beerStyle":"IPA","upc":"123456","price":12.99,"quantityOnHand":100}'
    ```
