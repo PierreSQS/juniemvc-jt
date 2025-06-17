@@ -40,22 +40,22 @@ src/
 1. **Prerequisites**: Java 21, Maven 3.9.6+
 2. **Build the application**:
    ```
-   .\mvnw.cmd clean install
+   ./mvnw clean install
    ```
 3. **Run the application**:
    ```
-   .\mvnw.cmd spring-boot:run
+   ./mvnw spring-boot:run
    ```
 4. **Access the API**: The REST API is available at `http://localhost:8080/api/v1/beers`
 
 ## Testing
 1. **Run all tests**:
    ```
-   .\mvnw.cmd test
+   ./mvnw test
    ```
 2. **Run specific test class**:
    ```
-   .\mvnw.cmd test -Dtest=BeerControllerTest
+   ./mvnw test -Dtest=BeerControllerTest
    ```
 3. **Test endpoints with curl**:
    ```
