@@ -39,15 +39,12 @@ The project currently has the following key components:
    - @AllArgsConstructor
 
 ### 2.2 Create MapStruct Mapper
-1. Add MapStruct dependencies to pom.xml:
-   - org.mapstruct:mapstruct
-   - org.mapstruct:mapstruct-processor
-2. Create a new package `guru.springframework.juniemvc.mappers`
-3. Create a new interface `BeerMapper` with:
+1. Create a new package `guru.springframework.juniemvc.mappers`
+2. Create a new interface `BeerMapper` with:
    - Method to convert from Beer to BeerDto
    - Method to convert from BeerDto to Beer
    - Configuration to ignore id, createdDate, and updateDate when mapping from BeerDto to Beer
-4. Annotate with `@Mapper(componentModel = "spring")`
+3. Annotate with `@Mapper(componentModel = "spring")`
 
 ### 2.3 Update Service Layer
 1. Modify the `BeerService` interface:
