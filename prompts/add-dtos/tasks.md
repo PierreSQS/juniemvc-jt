@@ -1,9 +1,8 @@
 # DTO Implementation Task List
 
 ## 1. Project Setup
-- [ ] 1.1. Add MapStruct dependency to pom.xml
-- [ ] 1.2. Add Lombok dependency to pom.xml (if not already present)
-- [ ] 1.3. Configure Maven compiler plugin for annotation processing
+- [ ] 1.1. Add Lombok dependency to pom.xml (if not already present)
+- [ ] 1.2. Configure Maven compiler plugin for annotation processing
 
 ## 2. Create DTO Structure
 - [ ] 2.1. Create package `guru.springframework.juniemvc.models`
