@@ -1,6 +1,6 @@
 package guru.springframework.juniemvc.controllers;
 
-import guru.springframework.juniemvc.entities.Beer;
+import guru.springframework.juniemvc.models.BeerDto;
 import guru.springframework.juniemvc.services.BeerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,7 @@ public class BeerController {
      * @return List of all beers
      */
     @GetMapping
-    public List<Beer> getAllBeers() {
+    public List<BeerDto> getAllBeers() {
         return beerService.getAllBeers();
     }
 
@@ -36,7 +36,7 @@ public class BeerController {
      * @return ResponseEntity containing the beer if found, or 404 if not found
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Beer> getBeerById(@PathVariable Integer id) {
+    public ResponseEntity<BeerDto> getBeerById(@PathVariable Integer id) {
         return beerService.getBeerById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -44,26 +44,26 @@ public class BeerController {
 
     /**
      * Create a new beer
-     * @param beer The beer to create
+     * @param beerDto The beer to create
      * @return The created beer with 201 Created status
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Beer createBeer(@RequestBody Beer beer) {
+    public BeerDto createBeer(@RequestBody BeerDto beerDto) {
         // Ensure a new beer is created, not an update
-        beer.setId(null);
-        return beerService.saveBeer(beer);
+        beerDto.setId(null);
+        return beerService.saveBeer(beerDto);
     }
 
     /**
      * Update an existing beer
      * @param id The beer ID
-     * @param beer The updated beer data
+     * @param beerDto The updated beer data
      * @return ResponseEntity containing the updated beer if found, or 404 if not found
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Beer> updateBeer(@PathVariable Integer id, @RequestBody Beer beer) {
-        return beerService.updateBeer(id, beer)
+    public ResponseEntity<BeerDto> updateBeer(@PathVariable Integer id, @RequestBody BeerDto beerDto) {
+        return beerService.updateBeer(id, beerDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

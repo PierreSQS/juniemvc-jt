@@ -1,7 +1,7 @@
 package guru.springframework.juniemvc.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import guru.springframework.juniemvc.entities.Beer;
+import guru.springframework.juniemvc.models.BeerDto;
 import guru.springframework.juniemvc.services.BeerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,12 +42,12 @@ class BeerControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private Beer testBeer;
-    private List<Beer> testBeers;
+    private BeerDto testBeer;
+    private List<BeerDto> testBeers;
 
     @BeforeEach
     void setUp() {
-        testBeer = Beer.builder()
+        testBeer = BeerDto.builder()
                 .id(1)
                 .beerName("Test Beer")
                 .beerStyle("IPA")
@@ -56,7 +56,7 @@ class BeerControllerTest {
                 .quantityOnHand(100)
                 .build();
 
-        Beer testBeer2 = Beer.builder()
+        BeerDto testBeer2 = BeerDto.builder()
                 .id(2)
                 .beerName("Another Beer")
                 .beerStyle("Lager")
@@ -108,7 +108,7 @@ class BeerControllerTest {
 
     @Test
     void createBeer() throws Exception {
-        Beer newBeer = Beer.builder()
+        BeerDto newBeer = BeerDto.builder()
                 .beerName("New Beer")
                 .beerStyle("Stout")
                 .upc("111222333")
@@ -116,7 +116,7 @@ class BeerControllerTest {
                 .quantityOnHand(50)
                 .build();
 
-        Beer savedBeer = Beer.builder()
+        BeerDto savedBeer = BeerDto.builder()
                 .id(3)
                 .beerName("New Beer")
                 .beerStyle("Stout")
@@ -125,7 +125,7 @@ class BeerControllerTest {
                 .quantityOnHand(50)
                 .build();
 
-        given(beerService.saveBeer(any(Beer.class))).willReturn(savedBeer);
+        given(beerService.saveBeer(any(BeerDto.class))).willReturn(savedBeer);
 
         mockMvc.perform(post("/api/v1/beers")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -139,7 +139,7 @@ class BeerControllerTest {
 
     @Test
     void updateBeer() throws Exception {
-        Beer updatedBeer = Beer.builder()
+        BeerDto updatedBeer = BeerDto.builder()
                 .beerName("Updated Beer")
                 .beerStyle("Updated Style")
                 .upc("999999")
@@ -147,7 +147,7 @@ class BeerControllerTest {
                 .quantityOnHand(150)
                 .build();
 
-        Beer savedBeer = Beer.builder()
+        BeerDto savedBeer = BeerDto.builder()
                 .id(1)
                 .beerName("Updated Beer")
                 .beerStyle("Updated Style")
@@ -157,7 +157,7 @@ class BeerControllerTest {
                 .build();
 
         // Use when/thenReturn instead of given/willReturn for more flexibility
-        when(beerService.updateBeer(anyInt(), any(Beer.class))).thenReturn(Optional.of(savedBeer));
+        when(beerService.updateBeer(anyInt(), any(BeerDto.class))).thenReturn(Optional.of(savedBeer));
 
         System.out.println("[DEBUG_LOG] Test Beer JSON: " + objectMapper.writeValueAsString(updatedBeer));
 
@@ -172,7 +172,7 @@ class BeerControllerTest {
 
     @Test
     void updateBeerNotFound() throws Exception {
-        Beer updatedBeer = Beer.builder()
+        BeerDto updatedBeer = BeerDto.builder()
                 .beerName("Updated Beer")
                 .beerStyle("Updated Style")
                 .upc("999999")
@@ -184,7 +184,7 @@ class BeerControllerTest {
         reset(beerService);
 
         // Setup mock specifically for ID 999
-        when(beerService.updateBeer(eq(999), any(Beer.class))).thenReturn(Optional.empty());
+        when(beerService.updateBeer(eq(999), any(BeerDto.class))).thenReturn(Optional.empty());
 
         mockMvc.perform(put("/api/v1/beers/999")
                 .contentType(MediaType.APPLICATION_JSON)
