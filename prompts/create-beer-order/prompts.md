@@ -1,3 +1,7 @@
+Update the requirements-draft.md to include instructions for the creation of repositories, services, dtos, mappers, controllers and tests. Use language to instruct it to implement CRUD operations
+
+----------------------------------------
+
 Analyze the attached ERD image. Create detailed instructions for a Java developer to implement the relationships in JPA with Lombok.
 
 ----------------------------------------
