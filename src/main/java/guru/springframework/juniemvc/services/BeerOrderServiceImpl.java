@@ -6,7 +6,6 @@ import guru.springframework.juniemvc.entities.BeerOrderLine;
 import guru.springframework.juniemvc.mappers.BeerOrderLineMapper;
 import guru.springframework.juniemvc.mappers.BeerOrderMapper;
 import guru.springframework.juniemvc.models.BeerOrderDto;
-import guru.springframework.juniemvc.models.BeerOrderLineDto;
 import guru.springframework.juniemvc.repositories.BeerOrderRepository;
 import guru.springframework.juniemvc.repositories.BeerRepository;
 import org.springframework.stereotype.Service;

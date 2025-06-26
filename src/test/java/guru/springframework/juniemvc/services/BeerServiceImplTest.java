@@ -60,7 +60,7 @@ class BeerServiceImplTest {
     @Test
     void getAllBeers() {
         // Given
-        when(beerRepository.findAll()).thenReturn(Arrays.asList(testBeer));
+        when(beerRepository.findAll()).thenReturn(List.of(testBeer));
         when(beerMapper.beerToBeerDto(testBeer)).thenReturn(testBeerDto);
 
         // When
@@ -68,7 +68,7 @@ class BeerServiceImplTest {
 
         // Then
         assertThat(beers).hasSize(1);
-        assertThat(beers.get(0).getBeerName()).isEqualTo("Test Beer");
+        assertThat(beers.getFirst().getBeerName()).isEqualTo("Test Beer");
         verify(beerRepository, times(1)).findAll();
         verify(beerMapper, times(1)).beerToBeerDto(any(Beer.class));
     }

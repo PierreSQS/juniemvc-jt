@@ -17,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +24,6 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -111,7 +109,7 @@ class BeerOrderServiceImplTest {
     @Test
     void getAllBeerOrders() {
         // Given
-        when(beerOrderRepository.findAll()).thenReturn(Arrays.asList(testBeerOrder));
+        when(beerOrderRepository.findAll()).thenReturn(List.of(testBeerOrder));
         when(beerOrderMapper.beerOrderToBeerOrderDto(testBeerOrder)).thenReturn(testBeerOrderDto);
 
         // When
@@ -119,7 +117,7 @@ class BeerOrderServiceImplTest {
 
         // Then
         assertThat(beerOrders).hasSize(1);
-        assertThat(beerOrders.get(0).getCustomerRef()).isEqualTo("Test Customer");
+        assertThat(beerOrders.getFirst().getCustomerRef()).isEqualTo("Test Customer");
         verify(beerOrderRepository, times(1)).findAll();
         verify(beerOrderMapper, times(1)).beerOrderToBeerOrderDto(any(BeerOrder.class));
     }
