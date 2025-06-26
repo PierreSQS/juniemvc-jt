@@ -32,14 +32,13 @@ class BeerOrderLineRepositoryTest {
     @Autowired
     private BeerRepository beerRepository;
 
-    private Customer testCustomer;
     private Beer testBeer;
     private BeerOrder testBeerOrder;
 
     @BeforeEach
     void setUp() {
         // Create and save a test customer
-        testCustomer = customerRepository.save(Customer.builder()
+        Customer testCustomer = customerRepository.save(Customer.builder()
                 .name("Test Customer")
                 .email("test@example.com")
                 .build());

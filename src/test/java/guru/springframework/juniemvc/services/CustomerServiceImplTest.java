@@ -11,7 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,7 +56,7 @@ class CustomerServiceImplTest {
     @Test
     void getAllCustomers() {
         // Given
-        List<Customer> customers = Arrays.asList(testCustomer);
+        List<Customer> customers = List.of(testCustomer);
         when(customerRepository.findAll()).thenReturn(customers);
         when(customerMapper.customerToCustomerDto(any(Customer.class))).thenReturn(testCustomerDto);
 

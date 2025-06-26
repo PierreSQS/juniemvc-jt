@@ -90,7 +90,7 @@ class BeerOrderServiceImplTest {
     @Test
     void getAllBeerOrders() {
         // Given
-        List<BeerOrder> beerOrders = Arrays.asList(testBeerOrder);
+        List<BeerOrder> beerOrders = List.of(testBeerOrder);
         when(beerOrderRepository.findAll()).thenReturn(beerOrders);
         when(beerOrderMapper.beerOrderToBeerOrderDto(any(BeerOrder.class))).thenReturn(testBeerOrderDto);
 
@@ -106,7 +106,7 @@ class BeerOrderServiceImplTest {
     @Test
     void getBeerOrdersByCustomerId() {
         // Given
-        List<BeerOrder> beerOrders = Arrays.asList(testBeerOrder);
+        List<BeerOrder> beerOrders = List.of(testBeerOrder);
         when(customerRepository.findById(anyInt())).thenReturn(Optional.of(testCustomer));
         when(beerOrderRepository.findAllByCustomer(any(Customer.class))).thenReturn(beerOrders);
         when(beerOrderMapper.beerOrderToBeerOrderDto(any(BeerOrder.class))).thenReturn(testBeerOrderDto);
