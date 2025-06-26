@@ -3,157 +3,157 @@
 This document contains a detailed task list for implementing the beer ordering system based on the plan in `plan.md`.
 
 ## 1. Entity Layer Implementation
-1. [ ] Beer entity (already implemented)
-2. [ ] Create Customer entity
-   - [ ] Define id field (Integer)
-   - [ ] Define version field (Integer)
-   - [ ] Define name field (String)
-   - [ ] Define email field (String)
-   - [ ] Define orders field (OneToMany relationship with BeerOrder)
-   - [ ] Define createdDate and lastModifiedDate fields
-   - [ ] Add JPA annotations
+1. [x] Beer entity (already implemented)
+2. [x] Create Customer entity
+   - [x] Define id field (Integer)
+   - [x] Define version field (Integer)
+   - [x] Define name field (String)
+   - [x] Define email field (String)
+   - [x] Define orders field (OneToMany relationship with BeerOrder)
+   - [x] Define createdDate and lastModifiedDate fields
+   - [x] Add JPA annotations
    - [ ] Implement equals/hashCode methods
-   - [ ] Add Lombok annotations
-3. [ ] Create BeerOrder entity
-   - [ ] Define id field (Integer)
-   - [ ] Define version field (Integer)
-   - [ ] Define orderStatus field (Enum)
-   - [ ] Define customer field (ManyToOne relationship with Customer)
-   - [ ] Define orderLines field (OneToMany relationship with BeerOrderLine)
-   - [ ] Define createdDate and lastModifiedDate fields
-   - [ ] Add JPA annotations
-   - [ ] Implement helper method to maintain bidirectional relationship with BeerOrderLine
+   - [x] Add Lombok annotations
+3. [x] Create BeerOrder entity
+   - [x] Define id field (Integer)
+   - [x] Define version field (Integer)
+   - [x] Define orderStatus field (Enum)
+   - [x] Define customer field (ManyToOne relationship with Customer)
+   - [x] Define orderLines field (OneToMany relationship with BeerOrderLine)
+   - [x] Define createdDate and lastModifiedDate fields
+   - [x] Add JPA annotations
+   - [x] Implement helper method to maintain bidirectional relationship with BeerOrderLine
    - [ ] Implement equals/hashCode methods
-   - [ ] Add Lombok annotations
-4. [ ] Create BeerOrderLine entity
-   - [ ] Define id field (Integer)
-   - [ ] Define version field (Integer)
-   - [ ] Define orderQuantity field (Integer)
-   - [ ] Define beerOrder field (ManyToOne relationship with BeerOrder)
-   - [ ] Define beer field (ManyToOne relationship with Beer)
-   - [ ] Define createdDate and lastModifiedDate fields
-   - [ ] Add JPA annotations
+   - [x] Add Lombok annotations
+4. [x] Create BeerOrderLine entity
+   - [x] Define id field (Integer)
+   - [x] Define version field (Integer)
+   - [x] Define orderQuantity field (Integer)
+   - [x] Define beerOrder field (ManyToOne relationship with BeerOrder)
+   - [x] Define beer field (ManyToOne relationship with Beer)
+   - [x] Define createdDate and lastModifiedDate fields
+   - [x] Add JPA annotations
    - [ ] Implement equals/hashCode methods
-   - [ ] Add Lombok annotations
+   - [x] Add Lombok annotations
 
 ## 2. Repository Layer Implementation
-1. [ ] BeerRepository (already implemented)
-2. [ ] Create CustomerRepository
-   - [ ] Extend JpaRepository<Customer, Integer>
-   - [ ] Add any custom query methods if needed
-3. [ ] Create BeerOrderRepository
-   - [ ] Extend JpaRepository<BeerOrder, Integer>
-   - [ ] Add method to find orders by customer
-   - [ ] Add any other custom query methods if needed
-4. [ ] Create BeerOrderLineRepository
-   - [ ] Extend JpaRepository<BeerOrderLine, Integer>
-   - [ ] Add any custom query methods if needed
+1. [x] BeerRepository (already implemented)
+2. [x] Create CustomerRepository
+   - [x] Extend JpaRepository<Customer, Integer>
+   - [x] Add any custom query methods if needed
+3. [x] Create BeerOrderRepository
+   - [x] Extend JpaRepository<BeerOrder, Integer>
+   - [x] Add method to find orders by customer
+   - [x] Add any other custom query methods if needed
+4. [x] Create BeerOrderLineRepository
+   - [x] Extend JpaRepository<BeerOrderLine, Integer>
+   - [x] Add any custom query methods if needed
 
 ## 3. DTO Layer Implementation
-1. [ ] BeerDto (already implemented)
-2. [ ] Create CustomerDto
-   - [ ] Define id field (Integer)
-   - [ ] Define version field (Integer)
-   - [ ] Define name field (String)
-   - [ ] Define email field (String)
-   - [ ] Define createdDate and lastModifiedDate fields
+1. [x] BeerDto (already implemented)
+2. [x] Create CustomerDto
+   - [x] Define id field (Integer)
+   - [x] Define version field (Integer)
+   - [x] Define name field (String)
+   - [x] Define email field (String)
+   - [x] Define createdDate and lastModifiedDate fields
    - [ ] Add validation annotations
-   - [ ] Add Lombok annotations
-3. [ ] Create BeerOrderDto
-   - [ ] Define id field (Integer)
-   - [ ] Define version field (Integer)
-   - [ ] Define orderStatus field (Enum)
-   - [ ] Define customerId field (Integer)
-   - [ ] Define customerName field (String)
-   - [ ] Define orderLines field (List of BeerOrderLineDto)
-   - [ ] Define createdDate and lastModifiedDate fields
+   - [x] Add Lombok annotations
+3. [x] Create BeerOrderDto
+   - [x] Define id field (Integer)
+   - [x] Define version field (Integer)
+   - [x] Define orderStatus field (Enum)
+   - [x] Define customerId field (Integer)
+   - [x] Define customerName field (String)
+   - [x] Define orderLines field (List of BeerOrderLineDto)
+   - [x] Define createdDate and lastModifiedDate fields
    - [ ] Add validation annotations
-   - [ ] Add Lombok annotations
-4. [ ] Create BeerOrderLineDto
-   - [ ] Define id field (Integer)
-   - [ ] Define version field (Integer)
-   - [ ] Define orderId field (Integer)
-   - [ ] Define beerId field (Integer)
-   - [ ] Define beerName field (String)
-   - [ ] Define orderQuantity field (Integer)
+   - [x] Add Lombok annotations
+4. [x] Create BeerOrderLineDto
+   - [x] Define id field (Integer)
+   - [x] Define version field (Integer)
+   - [x] Define orderId field (Integer)
+   - [x] Define beerId field (Integer)
+   - [x] Define beerName field (String)
+   - [x] Define orderQuantity field (Integer)
    - [ ] Add validation annotations
-   - [ ] Add Lombok annotations
+   - [x] Add Lombok annotations
 
 ## 4. Mapper Layer Implementation
-1. [ ] BeerMapper (already implemented)
-2. [ ] Create CustomerMapper
-   - [ ] Define interface with MapStruct annotations
-   - [ ] Add method to convert Customer to CustomerDto
-   - [ ] Add method to convert CustomerDto to Customer
-3. [ ] Create BeerOrderMapper
-   - [ ] Define interface with MapStruct annotations
-   - [ ] Add method to convert BeerOrder to BeerOrderDto
-   - [ ] Add method to convert BeerOrderDto to BeerOrder
-   - [ ] Configure to use BeerOrderLineMapper and CustomerMapper
-4. [ ] Create BeerOrderLineMapper
-   - [ ] Define interface with MapStruct annotations
-   - [ ] Add method to convert BeerOrderLine to BeerOrderLineDto
-   - [ ] Add method to convert BeerOrderLineDto to BeerOrderLine
-   - [ ] Configure to use BeerMapper
+1. [x] BeerMapper (already implemented)
+2. [x] Create CustomerMapper
+   - [x] Define interface with MapStruct annotations
+   - [x] Add method to convert Customer to CustomerDto
+   - [x] Add method to convert CustomerDto to Customer
+3. [x] Create BeerOrderMapper
+   - [x] Define interface with MapStruct annotations
+   - [x] Add method to convert BeerOrder to BeerOrderDto
+   - [x] Add method to convert BeerOrderDto to BeerOrder
+   - [x] Configure to use BeerOrderLineMapper and CustomerMapper
+4. [x] Create BeerOrderLineMapper
+   - [x] Define interface with MapStruct annotations
+   - [x] Add method to convert BeerOrderLine to BeerOrderLineDto
+   - [x] Add method to convert BeerOrderLineDto to BeerOrderLine
+   - [x] Configure to use BeerMapper
 
 ## 5. Service Layer Implementation
-1. [ ] BeerService and BeerServiceImpl (already implemented)
-2. [ ] Create CustomerService interface
-   - [ ] Define method to get all customers
-   - [ ] Define method to get customer by ID
-   - [ ] Define method to save customer
-   - [ ] Define method to update customer
-   - [ ] Define method to delete customer
-3. [ ] Create CustomerServiceImpl
-   - [ ] Implement CustomerService interface
-   - [ ] Add constructor injection for CustomerRepository and CustomerMapper
-   - [ ] Add @Transactional annotations
-   - [ ] Add @Transactional(readOnly = true) for query-only methods
-   - [ ] Implement business logic for all methods
-4. [ ] Create BeerOrderService interface
-   - [ ] Define method to get all orders
-   - [ ] Define method to get order by ID
-   - [ ] Define method to get orders by customer
-   - [ ] Define method to save order
-   - [ ] Define method to update order
-   - [ ] Define method to delete order
-5. [ ] Create BeerOrderServiceImpl
-   - [ ] Implement BeerOrderService interface
-   - [ ] Add constructor injection for BeerOrderRepository, BeerOrderMapper, and other dependencies
-   - [ ] Add @Transactional annotations
-   - [ ] Add @Transactional(readOnly = true) for query-only methods
-   - [ ] Implement business logic for all methods
-   - [ ] Handle relationships between entities
+1. [x] BeerService and BeerServiceImpl (already implemented)
+2. [x] Create CustomerService interface
+   - [x] Define method to get all customers
+   - [x] Define method to get customer by ID
+   - [x] Define method to save customer
+   - [x] Define method to update customer
+   - [x] Define method to delete customer
+3. [x] Create CustomerServiceImpl
+   - [x] Implement CustomerService interface
+   - [x] Add constructor injection for CustomerRepository and CustomerMapper
+   - [x] Add @Transactional annotations
+   - [x] Add @Transactional(readOnly = true) for query-only methods
+   - [x] Implement business logic for all methods
+4. [x] Create BeerOrderService interface
+   - [x] Define method to get all orders
+   - [x] Define method to get order by ID
+   - [x] Define method to get orders by customer
+   - [x] Define method to save order
+   - [x] Define method to update order
+   - [x] Define method to delete order
+5. [x] Create BeerOrderServiceImpl
+   - [x] Implement BeerOrderService interface
+   - [x] Add constructor injection for BeerOrderRepository, BeerOrderMapper, and other dependencies
+   - [x] Add @Transactional annotations
+   - [x] Add @Transactional(readOnly = true) for query-only methods
+   - [x] Implement business logic for all methods
+   - [x] Handle relationships between entities
 
 ## 6. Controller Layer Implementation
-1. [ ] BeerController (already implemented)
-2. [ ] Create CustomerController
-   - [ ] Add constructor injection for CustomerService
-   - [ ] Implement endpoint to get all customers
-   - [ ] Implement endpoint to get customer by ID
-   - [ ] Implement endpoint to create customer
-   - [ ] Implement endpoint to update customer
-   - [ ] Implement endpoint to delete customer
-   - [ ] Add appropriate HTTP status codes
+1. [x] BeerController (already implemented)
+2. [x] Create CustomerController
+   - [x] Add constructor injection for CustomerService
+   - [x] Implement endpoint to get all customers
+   - [x] Implement endpoint to get customer by ID
+   - [x] Implement endpoint to create customer
+   - [x] Implement endpoint to update customer
+   - [x] Implement endpoint to delete customer
+   - [x] Add appropriate HTTP status codes
    - [ ] Add validation handling
-3. [ ] Create BeerOrderController
-   - [ ] Add constructor injection for BeerOrderService
-   - [ ] Implement endpoint to get all orders
-   - [ ] Implement endpoint to get order by ID
-   - [ ] Implement endpoint to get orders by customer
-   - [ ] Implement endpoint to create order
-   - [ ] Implement endpoint to update order
-   - [ ] Implement endpoint to delete order
-   - [ ] Add appropriate HTTP status codes
+3. [x] Create BeerOrderController
+   - [x] Add constructor injection for BeerOrderService
+   - [x] Implement endpoint to get all orders
+   - [x] Implement endpoint to get order by ID
+   - [x] Implement endpoint to get orders by customer
+   - [x] Implement endpoint to create order
+   - [x] Implement endpoint to update order
+   - [x] Implement endpoint to delete order
+   - [x] Add appropriate HTTP status codes
    - [ ] Add validation handling
 
 ## 7. Testing
-1. [ ] Repository Tests
-   - [ ] Create CustomerRepositoryTest
-   - [ ] Create BeerOrderRepositoryTest
-   - [ ] Create BeerOrderLineRepositoryTest
-   - [ ] Test CRUD operations for each repository
-   - [ ] Test custom query methods
+1. [x] Repository Tests
+   - [x] Create CustomerRepositoryTest
+   - [x] Create BeerOrderRepositoryTest
+   - [x] Create BeerOrderLineRepositoryTest
+   - [x] Test CRUD operations for each repository
+   - [x] Test custom query methods
 2. [ ] Service Tests
    - [ ] Create CustomerServiceImplTest
    - [ ] Create BeerOrderServiceImplTest
