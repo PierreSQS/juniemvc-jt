@@ -182,3 +182,16 @@ logger.atDebug()
 * **Multiple outputs and formats:** Direct logs to consoles, rolling files, databases, or remote systems, and choose formats like JSON for seamless ingestion into ELK, Loki, or other log-analysis tools.
 
 * **Better tooling and analysis:** Structured logs and controlled log levels make it easier to filter noise, automate alerts, and visualize application behavior in real time.
+
+## 15. Database Migrations with Flyway
+* Use Flyway for database schema migrations to ensure consistent database evolution across all environments.
+* Place migration scripts in the default location: `src/main/resources/db/migration`.
+* Follow the Flyway version naming convention: `V{version}__{description}.sql` (e.g., `V1__create_tables.sql`, `V2__add_indexes.sql`).
+* Keep migrations idempotent and immutable once they are applied to any environment.
+
+**Explanation:**
+
+* **Consistent database state:** Flyway ensures that your database schema evolves consistently across all environments (development, testing, production) by tracking which migrations have been applied.
+* **Version control for database:** Migration scripts in the standard location (`db/migration`) are automatically detected and applied in version order when the application starts.
+* **Clear history:** The versioned naming pattern (`V1__create_tables.sql`) makes it easy to understand the evolution of your database schema over time.
+* **Repeatable migrations:** For migrations that should be re-applied when changed (like views or stored procedures), use the `R__` prefix instead of `V` (e.g., `R__create_views.sql`).
