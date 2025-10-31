@@ -196,40 +196,32 @@ logger.atDebug()
 * **Clear history:** The versioned naming pattern (`V1__create_tables.sql`) makes it easy to understand the evolution of your database schema over time.
 * **Repeatable migrations:** For migrations that should be re-applied when changed (like views or stored procedures), use the `R__` prefix instead of `V` (e.g., `R__create_views.sql`).
 
-## 16. OpenAPI Documentation Guidelines
-* Use OpenAPI Specification (OAS) to document your REST APIs in a standardized format.
-* Organize the OpenAPI specification using file references to maintain a clean and modular structure.
-* Follow consistent file naming conventions for paths and components.
-* Test your OpenAPI specification regularly to ensure it remains valid.
+
+## 16. OpenAPI Specification
+* API documentation for this project lives under `openapi/openapi/openapi.yaml` and is assembled from multiple files using `$ref` pointers.
+* The top-level `openapi.yaml` defines metadata (title, version, contact), servers, tags, and references to path files under `openapi/openapi/paths/` and component files under `openapi/openapi/components/`.
+* Path files are named from their URL path by replacing `/` with a path separator and keeping path parameters in `{}`. For example:
+  - `/users/{username}` → `openapi/openapi/paths/users_{username}.yaml` (see `$ref: 'paths/users_{username}.yaml'`).
+  - `/user` → `openapi/openapi/paths/user.yaml`.
+  - `/user/list` → `openapi/openapi/paths/user-status.yaml` (demonstrates that hyphens may be used to keep names readable when there are multiple segments).
+* Components are defined as separate files and referenced from paths using relative `$ref`s:
+  - Schemas: `openapi/openapi/components/schemas/*.yaml` (e.g., `$ref: '../components/schemas/User.yaml'`).
+  - Responses: `openapi/openapi/components/responses/*.yaml` (e.g., `$ref: ../components/responses/Problem.yaml`).
+  - Headers: `openapi/openapi/components/headers/*.yaml` (e.g., `$ref: ../components/headers/ExpiresAfter.yaml`).
+  - Security schemes are defined inline under `components.securitySchemes` in `openapi.yaml` (e.g., `main_auth`, `api_key`, `basic_auth`).
+* Keep file references short and readable by organizing path files at `openapi/openapi/paths/` and component files at `openapi/openapi/components/<type>/` so that relative paths remain simple like `../components/schemas/...` from a path file.
+* Testing and linting the OpenAPI definition:
+  - Prerequisites: Node.js and npm installed.
+  - From the repository root, run:
+    1) `cd openapi`
+    2) `npm test`
+  - This runs Redocly CLI lint (`redocly lint`) as defined in `openapi/package.json` to validate the specification and all `$ref` links.
+  - Optional useful commands:
+    - `npm start` to preview the docs locally with Redocly.
+    - `npm run build` to bundle the spec to `openapi/dist/bundle.yaml`.
 
 **Explanation:**
 
-* **File Structure Organization:** The OpenAPI specification is organized with a main `openapi.yaml` file that references other files for paths and components:
-  * Main file: `openapi/openapi/openapi.yaml` - Contains API metadata, servers, and references to paths and components
-  * Paths: Stored in the `paths/` directory
-  * Components: Organized in subdirectories under `components/` (schemas, responses, etc.)
-
-* **Path File Naming Convention:** 
-  * Path files are named based on the API path they represent
-  * Slashes in API paths are replaced with underscores
-  * Path parameters are enclosed in curly braces
-  * Example: API path `/users/{username}` corresponds to file `paths/users_{username}.yaml`
-
-* **Component File Organization:**
-  * Schemas are stored in `components/schemas/` directory
-  * Responses are stored in `components/responses/` directory
-  * Each component is defined in its own file for reusability
-  * Component files use relative paths for references to other components
-  * Example: `$ref: '../components/schemas/User.yaml'` or `$ref: './Email.yaml'`
-
-* **Testing the OpenAPI Specification:**
-  * The OpenAPI specification can be tested using the command `npm test` in the `openapi` directory
-  * This command runs `redocly lint` which validates the OpenAPI specification against best practices
-  * To preview the documentation, use `npm start` which runs `redocly preview-docs`
-  * To bundle the specification into a single file, use `npm run build` which creates `dist/bundle.yaml`
-
-* **Benefits of Modular OpenAPI Structure:**
-  * Improved maintainability by separating concerns
-  * Better version control with smaller, focused files
-  * Reusability of components across multiple endpoints
-  * Easier collaboration among team members working on different parts of the API
+* Using file references keeps the specification modular and easier to maintain. Each API path has its own file under `paths/`, and reusable parts live under `components/` (schemas, headers, responses), reducing duplication.
+* Naming path files from their API route (for example, `/users/{username}` → `users_{username}.yaml`) makes it easy to locate the definition associated with an endpoint by inspection.
+* Keeping components in typed subfolders (`schemas`, `headers`, `responses`) clarifies intent and enables simple, stable `$ref` paths across the spec.
