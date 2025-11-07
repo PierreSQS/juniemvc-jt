@@ -8,14 +8,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -39,10 +37,10 @@ class BeerOrderShipmentControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    @MockBean
+    @MockitoBean
     BeerOrderShipmentService beerOrderShipmentService;
 
-    @MockBean
+    @MockitoBean
     BeerOrderService beerOrderService;
 
     BeerOrderShipmentDto testShipment;
@@ -50,10 +48,10 @@ class BeerOrderShipmentControllerTest {
 
     @BeforeEach
     void setUp() {
-        // Create test shipment date
+        // Create a test shipment date
         testShipmentDate = LocalDateTime.now();
 
-        // Create test shipment
+        // Create a test shipment
         testShipment = BeerOrderShipmentDto.builder()
                 .id(1)
                 .shipmentDate(testShipmentDate)
@@ -65,7 +63,7 @@ class BeerOrderShipmentControllerTest {
     @Test
     void testGetAllShipments() throws Exception {
         // Given
-        List<BeerOrderShipmentDto> shipments = Arrays.asList(testShipment);
+        List<BeerOrderShipmentDto> shipments = List.of(testShipment);
         given(beerOrderShipmentService.getAllShipments(1)).willReturn(shipments);
 
         // When/Then

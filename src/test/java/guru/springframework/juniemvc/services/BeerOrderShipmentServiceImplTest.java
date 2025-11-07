@@ -15,14 +15,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -52,16 +50,16 @@ class BeerOrderShipmentServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        // Create test shipment date
+        // Create a test shipment date
         testShipmentDate = LocalDateTime.now();
 
-        // Create test beer order
+        // Create a test beer order
         testBeerOrder = BeerOrder.builder()
                 .status("COMPLETED")
                 .build();
         testBeerOrder.setId(1);
 
-        // Create test beer order shipment
+        // Create a test beer order shipment
         testBeerOrderShipment = BeerOrderShipment.builder()
                 .shipmentDate(testShipmentDate)
                 .carrier("FedEx")
@@ -70,7 +68,7 @@ class BeerOrderShipmentServiceImplTest {
                 .build();
         testBeerOrderShipment.setId(1);
 
-        // Create test beer order shipment DTO
+        // Create a test beer order shipment DTO
         testBeerOrderShipmentDto = BeerOrderShipmentDto.builder()
                 .id(1)
                 .shipmentDate(testShipmentDate)
@@ -82,7 +80,7 @@ class BeerOrderShipmentServiceImplTest {
     @Test
     void getAllShipments() {
         // Given
-        when(beerOrderShipmentRepository.findByBeerOrderId(1)).thenReturn(Arrays.asList(testBeerOrderShipment));
+        when(beerOrderShipmentRepository.findByBeerOrderId(1)).thenReturn(List.of(testBeerOrderShipment));
         when(beerOrderShipmentMapper.beerOrderShipmentToBeerOrderShipmentDto(testBeerOrderShipment)).thenReturn(testBeerOrderShipmentDto);
 
         // When
@@ -90,8 +88,8 @@ class BeerOrderShipmentServiceImplTest {
 
         // Then
         assertThat(shipments).hasSize(1);
-        assertThat(shipments.get(0).getCarrier()).isEqualTo("FedEx");
-        assertThat(shipments.get(0).getTrackingNumber()).isEqualTo("123456789");
+        assertThat(shipments.getFirst().getCarrier()).isEqualTo("FedEx");
+        assertThat(shipments.getFirst().getTrackingNumber()).isEqualTo("123456789");
         verify(beerOrderShipmentRepository, times(1)).findByBeerOrderId(1);
         verify(beerOrderShipmentMapper, times(1)).beerOrderShipmentToBeerOrderShipmentDto(any(BeerOrderShipment.class));
     }

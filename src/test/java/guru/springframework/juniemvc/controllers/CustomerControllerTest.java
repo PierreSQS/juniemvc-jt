@@ -7,11 +7,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -33,14 +33,14 @@ class CustomerControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    @MockBean
+    @MockitoBean
     CustomerService customerService;
 
     CustomerDto testCustomer;
 
     @BeforeEach
     void setUp() {
-        // Create test customer
+        // Create a test customer
         testCustomer = CustomerDto.builder()
                 .id(1)
                 .name("John Doe")
@@ -57,7 +57,7 @@ class CustomerControllerTest {
     @Test
     void testGetAllCustomers() throws Exception {
         // Given
-        given(customerService.getAllCustomers()).willReturn(Arrays.asList(testCustomer));
+        given(customerService.getAllCustomers()).willReturn(List.of(testCustomer));
 
         // When/Then
         mockMvc.perform(get("/api/v1/customers")

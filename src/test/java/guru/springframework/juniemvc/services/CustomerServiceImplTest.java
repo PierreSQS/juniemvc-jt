@@ -12,14 +12,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,7 +39,7 @@ class CustomerServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        // Create test customer
+        // Create a test customer
         testCustomer = Customer.builder()
                 .name("John Doe")
                 .email("john.doe@example.com")
@@ -71,7 +69,7 @@ class CustomerServiceImplTest {
     @Test
     void getAllCustomers() {
         // Given
-        when(customerRepository.findAll()).thenReturn(Arrays.asList(testCustomer));
+        when(customerRepository.findAll()).thenReturn(List.of(testCustomer));
         when(customerMapper.customerToCustomerDto(testCustomer)).thenReturn(testCustomerDto);
 
         // When
@@ -79,7 +77,7 @@ class CustomerServiceImplTest {
 
         // Then
         assertThat(customers).hasSize(1);
-        assertThat(customers.get(0).getName()).isEqualTo("John Doe");
+        assertThat(customers.getFirst().getName()).isEqualTo("John Doe");
         verify(customerRepository, times(1)).findAll();
         verify(customerMapper, times(1)).customerToCustomerDto(any(Customer.class));
     }
@@ -204,9 +202,8 @@ class CustomerServiceImplTest {
         when(customerRepository.findById(1)).thenReturn(Optional.empty());
 
         // When/Then
-        NotFoundException exception = assertThrows(NotFoundException.class, () -> {
-            customerService.updateCustomer(1, testCustomerDto);
-        });
+        NotFoundException exception = assertThrows(NotFoundException.class,
+                () -> customerService.updateCustomer(1, testCustomerDto));
 
         // Verify exception message
         assertThat(exception.getMessage()).contains("Customer not found with id: 1");

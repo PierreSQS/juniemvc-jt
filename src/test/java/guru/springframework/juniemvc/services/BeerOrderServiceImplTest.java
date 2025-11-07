@@ -19,7 +19,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +26,6 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -70,7 +68,7 @@ class BeerOrderServiceImplTest {
                 .build();
         testBeer.setId(1);
 
-        // Create test customer
+        // Create a test customer
         testCustomer = Customer.builder()
                 .name("Test Customer")
                 .email("test@example.com")
@@ -94,7 +92,7 @@ class BeerOrderServiceImplTest {
                 .postalCode("62701")
                 .build();
 
-        // Create test beer order line
+        // Create a test beer order line
         testBeerOrderLine = BeerOrderLine.builder()
                 .orderQuantity(2)
                 .quantityAllocated(2)
@@ -103,7 +101,7 @@ class BeerOrderServiceImplTest {
                 .build();
         testBeerOrderLine.setId(1);
 
-        // Create test beer order
+        // Create a test beer order
         testBeerOrder = BeerOrder.builder()
                 .customer(testCustomer)
                 .paymentAmount(new BigDecimal("25.98"))
@@ -112,7 +110,7 @@ class BeerOrderServiceImplTest {
         testBeerOrder.setId(1);
         testBeerOrder.addBeerOrderLine(testBeerOrderLine);
 
-        // Create test beer order line DTO
+        // Create a test beer order line DTO
         testBeerOrderLineDto = BeerOrderLineDto.builder()
                 .id(1)
                 .beerId(1)
@@ -124,7 +122,7 @@ class BeerOrderServiceImplTest {
                 .status("ALLOCATED")
                 .build();
 
-        // Create test beer order DTO
+        // Create a test beer order DTO
         Set<BeerOrderLineDto> lines = new HashSet<>();
         lines.add(testBeerOrderLineDto);
         testBeerOrderDto = BeerOrderDto.builder()
@@ -139,7 +137,7 @@ class BeerOrderServiceImplTest {
     @Test
     void getAllBeerOrders() {
         // Given
-        when(beerOrderRepository.findAll()).thenReturn(Arrays.asList(testBeerOrder));
+        when(beerOrderRepository.findAll()).thenReturn(List.of(testBeerOrder));
         when(beerOrderMapper.beerOrderToBeerOrderDto(testBeerOrder)).thenReturn(testBeerOrderDto);
 
         // When
@@ -147,8 +145,8 @@ class BeerOrderServiceImplTest {
 
         // Then
         assertThat(beerOrders).hasSize(1);
-        assertThat(beerOrders.get(0).getCustomer()).isNotNull();
-        assertThat(beerOrders.get(0).getCustomer().getName()).isEqualTo("Test Customer");
+        assertThat(beerOrders.getFirst().getCustomer()).isNotNull();
+        assertThat(beerOrders.getFirst().getCustomer().getName()).isEqualTo("Test Customer");
         verify(beerOrderRepository, times(1)).findAll();
         verify(beerOrderMapper, times(1)).beerOrderToBeerOrderDto(any(BeerOrder.class));
     }

@@ -38,7 +38,7 @@ class CustomerControllerIT {
     void setUp() {
         customerRepository.deleteAll();
 
-        // Create test customer
+        // Create a test customer
         testCustomer = Customer.builder()
                 .name("John Doe")
                 .email("john.doe@example.com")

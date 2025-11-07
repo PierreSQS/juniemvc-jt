@@ -15,7 +15,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,7 +22,6 @@ class BeerOrderMapperTest {
 
     private BeerOrderMapper beerOrderMapper;
     private BeerOrderLineMapper beerOrderLineMapper;
-    private CustomerMapper customerMapper;
     private BeerOrder testBeerOrder;
     private Beer testBeer;
     private Customer testCustomer;
@@ -33,12 +31,12 @@ class BeerOrderMapperTest {
     void setUp() {
         beerOrderMapper = Mappers.getMapper(BeerOrderMapper.class);
         beerOrderLineMapper = Mappers.getMapper(BeerOrderLineMapper.class);
-        customerMapper = Mappers.getMapper(CustomerMapper.class);
+        CustomerMapper customerMapper = Mappers.getMapper(CustomerMapper.class);
 
         ReflectionTestUtils.setField(beerOrderMapper, "beerOrderLineMapper", beerOrderLineMapper);
         ReflectionTestUtils.setField(beerOrderMapper, "customerMapper", customerMapper);
 
-        // Create test customer
+        // Create a test customer
         testCustomer = Customer.builder()
                 .name("Test Customer")
                 .email("test@example.com")
@@ -71,7 +69,7 @@ class BeerOrderMapperTest {
                 .build();
         testBeer.setId(1);
 
-        // Create test beer order
+        // Create a test beer order
         testBeerOrder = BeerOrder.builder()
                 .customer(testCustomer)
                 .paymentAmount(new BigDecimal("25.98"))
@@ -81,7 +79,7 @@ class BeerOrderMapperTest {
         testBeerOrder.setCreatedDate(LocalDateTime.now());
         testBeerOrder.setUpdateDate(LocalDateTime.now());
 
-        // Create test beer order line
+        // Create a test beer order line
         BeerOrderLine testBeerOrderLine = BeerOrderLine.builder()
                 .orderQuantity(2)
                 .quantityAllocated(2)
@@ -90,7 +88,7 @@ class BeerOrderMapperTest {
         testBeerOrderLine.setId(1);
         testBeerOrderLine.setBeer(testBeer);
 
-        // Add beer order line to beer order
+        // Add a beer order line to beer order
         testBeerOrder.addBeerOrderLine(testBeerOrderLine);
     }
 

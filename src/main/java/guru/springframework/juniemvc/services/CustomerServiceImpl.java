@@ -55,7 +55,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer existingCustomer = customerRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Customer not found with id: " + id));
 
-        // Update properties from DTO to existing entity using mapper
+        // Update properties from DTO to the existing entity using mapper
         customerMapper.updateCustomerFromDto(customerDto, existingCustomer);
 
         // Save the updated entity

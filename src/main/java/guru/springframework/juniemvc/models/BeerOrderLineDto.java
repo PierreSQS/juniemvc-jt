@@ -22,7 +22,7 @@ public class BeerOrderLineDto extends BaseEntityDto {
     private Integer beerId;
     private String beerName;
 
-    // style of the beer, ALE, PALE ALE, IPA, etc
+    // style of the beer, ALE, PALE ALE, IPA, etc.
     private String beerStyle;
     private String upc;
     

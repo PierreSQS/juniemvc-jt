@@ -9,20 +9,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
@@ -38,7 +35,7 @@ class BeerOrderControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    @MockBean
+    @MockitoBean
     BeerOrderService beerOrderService;
 
     BeerOrderDto testBeerOrder;
@@ -59,7 +56,7 @@ class BeerOrderControllerTest {
                 .postalCode("62701")
                 .build();
 
-        // Create test beer order line
+        // Create a test beer order line
         testBeerOrderLine = BeerOrderLineDto.builder()
                 .id(1)
                 .beerId(1)
@@ -71,7 +68,7 @@ class BeerOrderControllerTest {
                 .status("ALLOCATED")
                 .build();
 
-        // Create test beer order
+        // Create a test beer order
         Set<BeerOrderLineDto> lines = new HashSet<>();
         lines.add(testBeerOrderLine);
         testBeerOrder = BeerOrderDto.builder()
@@ -86,7 +83,7 @@ class BeerOrderControllerTest {
     @Test
     void testGetAllBeerOrders() throws Exception {
         // Given
-        given(beerOrderService.getAllBeerOrders()).willReturn(Arrays.asList(testBeerOrder));
+        given(beerOrderService.getAllBeerOrders()).willReturn(List.of(testBeerOrder));
 
         // When/Then
         mockMvc.perform(get("/api/v1/beer-orders")

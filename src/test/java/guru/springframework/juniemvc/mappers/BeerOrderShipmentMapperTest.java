@@ -18,23 +18,22 @@ class BeerOrderShipmentMapperTest {
 
     private BeerOrderShipmentMapper beerOrderShipmentMapper;
     private BeerOrderShipment testBeerOrderShipment;
-    private BeerOrder testBeerOrder;
     private LocalDateTime testShipmentDate;
 
     @BeforeEach
     void setUp() {
         beerOrderShipmentMapper = Mappers.getMapper(BeerOrderShipmentMapper.class);
         
-        // Create test beer order
-        testBeerOrder = BeerOrder.builder()
+        // Create a test beer order
+        BeerOrder testBeerOrder = BeerOrder.builder()
                 .status("COMPLETED")
                 .build();
         testBeerOrder.setId(1);
         
-        // Create test shipment date
+        // Create a test shipment date
         testShipmentDate = LocalDateTime.now();
         
-        // Create test beer order shipment
+        // Create a test beer order shipment
         testBeerOrderShipment = BeerOrderShipment.builder()
                 .shipmentDate(testShipmentDate)
                 .carrier("FedEx")
