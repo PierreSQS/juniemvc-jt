@@ -1,39 +1,77 @@
 get:
   tags:
     - Beer
-  summary: Get all beers
-  description: "Returns a list of all beers in the system."
-  operationId: getAllBeers
+  summary: List beers
+  description: "Returns a paged list of beers with optional filtering by beerName."
+  operationId: listBeers
   security:
     - api_key: []
+  parameters:
+    - in: query
+      name: beerName
+      required: false
+      schema:
+        type: string
+      description: Optional beer name filter (case-insensitive, substring match)
+    - in: query
+      name: page
+      required: true
+      schema:
+        type: integer
+        minimum: 0
+      description: Zero-based page index (0..N)
+    - in: query
+      name: size
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+      description: The size of the page to be returned
+    - in: query
+      name: sort
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      description: "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported."
+      style: form
+      explode: false
   responses:
     '200':
-      description: "Successfully retrieved the list of beers"
+      description: "Successfully retrieved a page of beers"
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: '../components/schemas/BeerDto.yaml'
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  $ref: '../components/schemas/BeerDto.yaml'
+              totalElements:
+                type: integer
+              totalPages:
+                type: integer
+              size:
+                type: integer
+              number:
+                type: integer
           example:
-            - id: 1
-              version: 0
-              createdDate: "2023-01-01T12:00:00Z"
-              updateDate: "2023-01-01T12:00:00Z"
-              beerName: "Mango Bobs"
-              beerStyle: "IPA"
-              upc: "0631234200036"
-              quantityOnHand: 100
-              price: 12.99
-            - id: 2
-              version: 0
-              createdDate: "2023-01-02T10:00:00Z"
-              updateDate: "2023-01-02T10:00:00Z"
-              beerName: "Galaxy Cat"
-              beerStyle: "PALE_ALE"
-              upc: "0631234300019"
-              quantityOnHand: 75
-              price: 11.99
+            content:
+              - id: 1
+                version: 0
+                createdDate: "2023-01-01T12:00:00Z"
+                updateDate: "2023-01-01T12:00:00Z"
+                beerName: "Mango Bobs"
+                beerStyle: "IPA"
+                upc: "0631234200036"
+                quantityOnHand: 100
+                price: 12.99
+            totalElements: 1
+            totalPages: 1
+            size: 10
+            number: 0
     '400':
       description: "Bad request"
     '401':

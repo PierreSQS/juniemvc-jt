@@ -3,11 +3,12 @@ package guru.springframework.juniemvc.controllers;
 import guru.springframework.juniemvc.models.BeerDto;
 import guru.springframework.juniemvc.services.BeerService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -24,12 +25,15 @@ public class BeerController {
     }
 
     /**
-     * Get all beers
-     * @return List of all beers
+     * Get beers with optional filtering and pagination
+     * @param beerName optional beer name filter
+     * @param pageable pagination information
+     * @return Page of beers
      */
     @GetMapping
-    public List<BeerDto> getAllBeers() {
-        return beerService.getAllBeers();
+    public Page<BeerDto> getAllBeers(@RequestParam(required = false) String beerName,
+                                     Pageable pageable) {
+        return beerService.listBeers(beerName, pageable);
     }
 
     /**

@@ -4,6 +4,8 @@ import guru.springframework.juniemvc.entities.Beer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -122,5 +124,46 @@ class BeerRepositoryTest {
 
         // Then
         assertThat(beers).hasSize(2);
+    }
+
+    @Test
+    void testFindAllPagedAndFiltered() {
+        // Given
+        beerRepository.deleteAll();
+        for (int i = 1; i <= 15; i++) {
+            beerRepository.save(Beer.builder()
+                    .beerName("Test Beer " + i)
+                    .beerStyle("Style")
+                    .upc("UPC" + i)
+                    .price(new BigDecimal("10.00"))
+                    .quantityOnHand(10)
+                    .build());
+        }
+        // Add a non-matching name
+        beerRepository.save(Beer.builder()
+                .beerName("Another Brand")
+                .beerStyle("Style")
+                .upc("UPC-XX")
+                .price(new BigDecimal("11.00"))
+                .quantityOnHand(5)
+                .build());
+
+        // When
+        PageRequest pageRequest = PageRequest.of(0, 5);
+        Page<Beer> page = beerRepository.findAllByBeerNameContainingIgnoreCase("Test", pageRequest);
+
+        // Then
+        assertThat(page.getTotalElements()).isEqualTo(15);
+        assertThat(page.getTotalPages()).isEqualTo(3);
+        assertThat(page.getContent()).hasSize(5);
+
+        // When - second page
+        page = beerRepository.findAllByBeerNameContainingIgnoreCase("Test", PageRequest.of(1, 5));
+        assertThat(page.getContent()).hasSize(5);
+
+        // When - all with pageable
+        page = beerRepository.findAll(PageRequest.of(0, 10));
+        assertThat(page.getTotalElements()).isEqualTo(16);
+        assertThat(page.getContent()).hasSize(10);
     }
 }

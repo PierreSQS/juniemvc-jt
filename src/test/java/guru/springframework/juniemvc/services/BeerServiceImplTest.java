@@ -57,18 +57,39 @@ class BeerServiceImplTest {
     }
 
     @Test
-    void getAllBeers() {
+    void listBeers_withoutFilter_usesFindAll() {
         // Given
-        when(beerRepository.findAll()).thenReturn(List.of(testBeer));
+        var pageable = org.springframework.data.domain.PageRequest.of(0, 10);
+        when(beerRepository.findAll(pageable)).thenReturn(new org.springframework.data.domain.PageImpl<>(List.of(testBeer), pageable, 1));
         when(beerMapper.beerToBeerDto(testBeer)).thenReturn(testBeerDto);
 
         // When
-        List<BeerDto> beers = beerService.getAllBeers();
+        var page = beerService.listBeers(null, pageable);
 
         // Then
-        assertThat(beers).hasSize(1);
-        assertThat(beers.getFirst().getBeerName()).isEqualTo("Test Beer");
-        verify(beerRepository, times(1)).findAll();
+        assertThat(page.getTotalElements()).isEqualTo(1);
+        assertThat(page.getContent()).hasSize(1);
+        assertThat(page.getContent().getFirst().getBeerName()).isEqualTo("Test Beer");
+        verify(beerRepository, times(1)).findAll(pageable);
+        verify(beerMapper, times(1)).beerToBeerDto(any(Beer.class));
+    }
+
+    @Test
+    void listBeers_withFilter_usesNameQuery() {
+        // Given
+        var pageable = org.springframework.data.domain.PageRequest.of(0, 10);
+        when(beerRepository.findAllByBeerNameContainingIgnoreCase("Test", pageable))
+                .thenReturn(new org.springframework.data.domain.PageImpl<>(List.of(testBeer), pageable, 1));
+        when(beerMapper.beerToBeerDto(testBeer)).thenReturn(testBeerDto);
+
+        // When
+        var page = beerService.listBeers("Test", pageable);
+
+        // Then
+        assertThat(page.getTotalElements()).isEqualTo(1);
+        assertThat(page.getContent()).hasSize(1);
+        assertThat(page.getContent().getFirst().getBeerName()).isEqualTo("Test Beer");
+        verify(beerRepository, times(1)).findAllByBeerNameContainingIgnoreCase("Test", pageable);
         verify(beerMapper, times(1)).beerToBeerDto(any(Beer.class));
     }
 
