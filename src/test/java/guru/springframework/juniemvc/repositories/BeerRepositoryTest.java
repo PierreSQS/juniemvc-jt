@@ -166,4 +166,48 @@ class BeerRepositoryTest {
         assertThat(page.getTotalElements()).isEqualTo(16);
         assertThat(page.getContent()).hasSize(10);
     }
+
+    @Test
+    void testFindAllPagedAndFilteredByStyle() {
+        // Given
+        beerRepository.deleteAll();
+        for (int i = 1; i <= 12; i++) {
+            beerRepository.save(Beer.builder()
+                    .beerName("Beer " + i)
+                    .beerStyle(i % 2 == 0 ? "IPA" : "Lager")
+                    .upc("UPC" + i)
+                    .price(new BigDecimal("10.00"))
+                    .quantityOnHand(10)
+                    .build());
+        }
+
+        // When
+        Page<Beer> page = beerRepository.findAllByBeerStyleContainingIgnoreCase("IPA", PageRequest.of(0, 5));
+
+        // Then
+        assertThat(page.getTotalElements()).isEqualTo(6);
+        assertThat(page.getContent()).hasSize(5);
+
+        // Next page
+        page = beerRepository.findAllByBeerStyleContainingIgnoreCase("IPA", PageRequest.of(1, 5));
+        assertThat(page.getContent()).hasSize(1);
+    }
+
+    @Test
+    void testFindAllPagedAndFilteredByNameAndStyle() {
+        // Given
+        beerRepository.deleteAll();
+        beerRepository.save(Beer.builder().beerName("Alpha One").beerStyle("IPA").upc("1").price(new BigDecimal("10.00")).quantityOnHand(10).build());
+        beerRepository.save(Beer.builder().beerName("Alpha Two").beerStyle("Lager").upc("2").price(new BigDecimal("10.00")).quantityOnHand(10).build());
+        beerRepository.save(Beer.builder().beerName("Beta One").beerStyle("IPA").upc("3").price(new BigDecimal("10.00")).quantityOnHand(10).build());
+
+        // When
+        Page<Beer> page = beerRepository.findAllByBeerNameContainingIgnoreCaseAndBeerStyleContainingIgnoreCase("Alpha", "IPA", PageRequest.of(0, 10));
+
+        // Then
+        assertThat(page.getTotalElements()).isEqualTo(1);
+        assertThat(page.getContent()).hasSize(1);
+        assertThat(page.getContent().getFirst().getBeerName()).isEqualTo("Alpha One");
+        assertThat(page.getContent().getFirst().getBeerStyle()).isEqualTo("IPA");
+    }
 }

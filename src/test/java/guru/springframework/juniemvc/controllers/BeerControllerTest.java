@@ -55,7 +55,7 @@ class BeerControllerTest {
         // Given
         var pageable = org.springframework.data.domain.PageRequest.of(0, 10);
         var page = new org.springframework.data.domain.PageImpl<>(List.of(testBeer), pageable, 1);
-        given(beerService.listBeers(org.mockito.ArgumentMatchers.isNull(), org.mockito.ArgumentMatchers.eq(pageable))).willReturn(page);
+        given(beerService.listBeers(org.mockito.ArgumentMatchers.isNull(), org.mockito.ArgumentMatchers.isNull(), org.mockito.ArgumentMatchers.eq(pageable))).willReturn(page);
 
         // When/Then
         mockMvc.perform(get("/api/v1/beers?page=0&size=10")
@@ -72,7 +72,7 @@ class BeerControllerTest {
         // Given
         var pageable = org.springframework.data.domain.PageRequest.of(0, 5);
         var page = new org.springframework.data.domain.PageImpl<>(List.of(testBeer), pageable, 1);
-        given(beerService.listBeers("Test", pageable)).willReturn(page);
+        given(beerService.listBeers("Test", null, pageable)).willReturn(page);
 
         // When/Then
         mockMvc.perform(get("/api/v1/beers?page=0&size=5&beerName=Test")
@@ -80,6 +80,37 @@ class BeerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(1)))
                 .andExpect(jsonPath("$.content[0].beerName", is("Test Beer")));
+    }
+
+    @Test
+    void testGetAllBeersPagedWithStyleFilter() throws Exception {
+        // Given
+        var pageable = org.springframework.data.domain.PageRequest.of(0, 5);
+        var page = new org.springframework.data.domain.PageImpl<>(List.of(testBeer), pageable, 1);
+        given(beerService.listBeers(null, "IPA", pageable)).willReturn(page);
+
+        // When/Then
+        mockMvc.perform(get("/api/v1/beers?page=0&size=5&beerStyle=IPA")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content", hasSize(1)))
+                .andExpect(jsonPath("$.content[0].beerStyle", is("IPA")));
+    }
+
+    @Test
+    void testGetAllBeersPagedWithNameAndStyleFilter() throws Exception {
+        // Given
+        var pageable = org.springframework.data.domain.PageRequest.of(0, 5);
+        var page = new org.springframework.data.domain.PageImpl<>(List.of(testBeer), pageable, 1);
+        given(beerService.listBeers("Test", "IPA", pageable)).willReturn(page);
+
+        // When/Then
+        mockMvc.perform(get("/api/v1/beers?page=0&size=5&beerName=Test&beerStyle=IPA")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content", hasSize(1)))
+                .andExpect(jsonPath("$.content[0].beerName", is("Test Beer")))
+                .andExpect(jsonPath("$.content[0].beerStyle", is("IPA")));
     }
 
     @Test

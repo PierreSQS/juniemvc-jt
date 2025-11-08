@@ -27,13 +27,15 @@ public class BeerController {
     /**
      * Get beers with optional filtering and pagination
      * @param beerName optional beer name filter
+     * @param beerStyle optional beer style filter
      * @param pageable pagination information
      * @return Page of beers
      */
     @GetMapping
     public Page<BeerDto> getAllBeers(@RequestParam(required = false) String beerName,
+                                     @RequestParam(required = false) String beerStyle,
                                      Pageable pageable) {
-        return beerService.listBeers(beerName, pageable);
+        return beerService.listBeers(beerName, beerStyle, pageable);
     }
 
     /**

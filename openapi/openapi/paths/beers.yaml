@@ -2,7 +2,7 @@ get:
   tags:
     - Beer
   summary: List beers
-  description: "Returns a paged list of beers with optional filtering by beerName."
+  description: "Returns a paged list of beers with optional filtering by beerName and beerStyle."
   operationId: listBeers
   security:
     - api_key: []
@@ -13,6 +13,12 @@ get:
       schema:
         type: string
       description: Optional beer name filter (case-insensitive, substring match)
+    - in: query
+      name: beerStyle
+      required: false
+      schema:
+        type: string
+      description: Optional beer style filter (case-insensitive, substring match)
     - in: query
       name: page
       required: true

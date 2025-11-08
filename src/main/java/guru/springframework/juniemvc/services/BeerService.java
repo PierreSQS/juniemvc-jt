@@ -12,12 +12,13 @@ import java.util.Optional;
 public interface BeerService {
 
     /**
-     * List beers with optional filtering by beerName and pagination
+     * List beers with optional filtering by beerName and beerStyle, with pagination
      * @param beerName optional beer name filter (may be null or blank)
+     * @param beerStyle optional beer style filter (may be null or blank)
      * @param pageable pagination information
      * @return Page of beers
      */
-    Page<BeerDto> listBeers(String beerName, Pageable pageable);
+    Page<BeerDto> listBeers(String beerName, String beerStyle, Pageable pageable);
 
     /**
      * Get a beer by its ID

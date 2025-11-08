@@ -25,10 +25,20 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
-    public Page<BeerDto> listBeers(String beerName, Pageable pageable) {
-        Page<Beer> page = (beerName == null || beerName.isBlank())
-                ? beerRepository.findAll(pageable)
-                : beerRepository.findAllByBeerNameContainingIgnoreCase(beerName, pageable);
+    public Page<BeerDto> listBeers(String beerName, String beerStyle, Pageable pageable) {
+        boolean hasName = beerName != null && !beerName.isBlank();
+        boolean hasStyle = beerStyle != null && !beerStyle.isBlank();
+
+        Page<Beer> page;
+        if (hasName && hasStyle) {
+            page = beerRepository.findAllByBeerNameContainingIgnoreCaseAndBeerStyleContainingIgnoreCase(beerName, beerStyle, pageable);
+        } else if (hasName) {
+            page = beerRepository.findAllByBeerNameContainingIgnoreCase(beerName, pageable);
+        } else if (hasStyle) {
+            page = beerRepository.findAllByBeerStyleContainingIgnoreCase(beerStyle, pageable);
+        } else {
+            page = beerRepository.findAll(pageable);
+        }
         return page.map(beerMapper::beerToBeerDto);
     }
 
