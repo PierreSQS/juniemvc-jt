@@ -44,6 +44,7 @@ class BeerServiceImplTest {
                 .upc("123456")
                 .price(new BigDecimal("12.99"))
                 .quantityOnHand(100)
+                .description("Crisp IPA")
                 .build();
 
         testBeerDto = BeerDto.builder()
@@ -53,6 +54,7 @@ class BeerServiceImplTest {
                 .upc("123456")
                 .price(new BigDecimal("12.99"))
                 .quantityOnHand(100)
+                .description("Crisp IPA")
                 .build();
     }
 
@@ -143,6 +145,7 @@ class BeerServiceImplTest {
         // Then
         assertThat(beerOptional).isPresent();
         assertThat(beerOptional.get().getBeerName()).isEqualTo("Test Beer");
+        assertThat(beerOptional.get().getDescription()).isEqualTo("Crisp IPA");
         verify(beerRepository, times(1)).findById(1);
         verify(beerMapper, times(1)).beerToBeerDto(any(Beer.class));
     }
@@ -169,6 +172,7 @@ class BeerServiceImplTest {
                 .upc("654321")
                 .price(new BigDecimal("14.99"))
                 .quantityOnHand(200)
+                .description("Rich stout with chocolate notes")
                 .build();
 
         Beer beerToSave = Beer.builder()
@@ -177,6 +181,7 @@ class BeerServiceImplTest {
                 .upc("654321")
                 .price(new BigDecimal("14.99"))
                 .quantityOnHand(200)
+                .description("Rich stout with chocolate notes")
                 .build();
 
         Beer savedBeer = Beer.builder()
@@ -186,6 +191,7 @@ class BeerServiceImplTest {
                 .upc("654321")
                 .price(new BigDecimal("14.99"))
                 .quantityOnHand(200)
+                .description("Rich stout with chocolate notes")
                 .build();
 
         BeerDto savedBeerDto = BeerDto.builder()
@@ -195,6 +201,7 @@ class BeerServiceImplTest {
                 .upc("654321")
                 .price(new BigDecimal("14.99"))
                 .quantityOnHand(200)
+                .description("Rich stout with chocolate notes")
                 .build();
 
         when(beerMapper.beerDtoToBeer(beerDtoToSave)).thenReturn(beerToSave);
@@ -223,6 +230,7 @@ class BeerServiceImplTest {
                 .upc("789012")
                 .price(new BigDecimal("16.99"))
                 .quantityOnHand(150)
+                .description("Smooth lager")
                 .build();
 
         Beer beerToUpdate = Beer.builder()
@@ -232,6 +240,7 @@ class BeerServiceImplTest {
                 .upc("789012")
                 .price(new BigDecimal("16.99"))
                 .quantityOnHand(150)
+                .description("Smooth lager")
                 .build();
 
         Beer updatedBeer = Beer.builder()
@@ -241,6 +250,7 @@ class BeerServiceImplTest {
                 .upc("789012")
                 .price(new BigDecimal("16.99"))
                 .quantityOnHand(150)
+                .description("Smooth lager")
                 .build();
 
         BeerDto updatedBeerDto = BeerDto.builder()
@@ -250,6 +260,7 @@ class BeerServiceImplTest {
                 .upc("789012")
                 .price(new BigDecimal("16.99"))
                 .quantityOnHand(150)
+                .description("Smooth lager")
                 .build();
 
         when(beerMapper.beerDtoToBeer(beerDtoToUpdate)).thenReturn(beerToUpdate);

@@ -33,6 +33,9 @@ public class Beer extends BaseEntity {
     @Column(precision = 19, scale = 2)
     private BigDecimal price;
 
+    @Column(length = 255)
+    private String description;
+
     @OneToMany(mappedBy = "beer")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

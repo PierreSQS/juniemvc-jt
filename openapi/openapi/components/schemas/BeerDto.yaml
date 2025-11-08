@@ -58,3 +58,7 @@ properties:
     format: decimal
     exclusiveMinimum: 0
     example: 12.99
+  description:
+    description: "Optional description of the beer."
+    type: string
+    example: "A crisp, refreshing IPA with notes of mango and citrus."
