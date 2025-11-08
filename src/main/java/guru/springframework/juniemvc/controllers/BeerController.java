@@ -4,7 +4,7 @@ import guru.springframework.juniemvc.models.BeerDto;
 import guru.springframework.juniemvc.services.BeerService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,13 +28,16 @@ public class BeerController {
      * Get beers with optional filtering and pagination
      * @param beerName optional beer name filter
      * @param beerStyle optional beer style filter
-     * @param pageable pagination information
+     * @param page zero-based page index (default 0)
+     * @param size page size (default 20)
      * @return Page of beers
      */
     @GetMapping
     public Page<BeerDto> getAllBeers(@RequestParam(required = false) String beerName,
                                      @RequestParam(required = false) String beerStyle,
-                                     Pageable pageable) {
+                                     @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+                                     @RequestParam(name = "size", required = false, defaultValue = "20") Integer size) {
+        var pageable = PageRequest.of(page, size);
         return beerService.listBeers(beerName, beerStyle, pageable);
     }
 

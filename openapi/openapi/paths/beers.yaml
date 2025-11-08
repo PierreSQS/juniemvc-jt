@@ -21,18 +21,20 @@ get:
       description: Optional beer style filter (case-insensitive, substring match)
     - in: query
       name: page
-      required: true
+      required: false
       schema:
         type: integer
         minimum: 0
-      description: Zero-based page index (0..N)
+        default: 0
+      description: Zero-based page index (0..N). Defaults to 0 if not provided.
     - in: query
       name: size
-      required: true
+      required: false
       schema:
         type: integer
         minimum: 1
-      description: The size of the page to be returned
+        default: 20
+      description: The size of the page to be returned. Defaults to 20 if not provided
     - in: query
       name: sort
       required: false

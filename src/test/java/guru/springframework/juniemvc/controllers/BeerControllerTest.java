@@ -68,6 +68,24 @@ class BeerControllerTest {
     }
 
     @Test
+    void testGetAllBeersWithDefaultPaging() throws Exception {
+        // Given - defaults page=0, size=20
+        var pageable = org.springframework.data.domain.PageRequest.of(0, 20);
+        var page = new org.springframework.data.domain.PageImpl<>(List.of(testBeer), pageable, 1);
+        given(beerService.listBeers(org.mockito.ArgumentMatchers.isNull(), org.mockito.ArgumentMatchers.isNull(), org.mockito.ArgumentMatchers.eq(pageable))).willReturn(page);
+
+        // When/Then
+        mockMvc.perform(get("/api/v1/beers")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content", hasSize(1)))
+                .andExpect(jsonPath("$.page.number", is(0)))
+                .andExpect(jsonPath("$.page.size", is(20)))
+                .andExpect(jsonPath("$.content[0].beerName", is("Test Beer")));
+    }
+
+    @Test
     void testGetAllBeersPagedWithFilter() throws Exception {
         // Given
         var pageable = org.springframework.data.domain.PageRequest.of(0, 5);
