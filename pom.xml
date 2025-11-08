@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from the repository -->
     </parent>
     <groupId>guru.springframework</groupId>
-    <artifactId>juniemvc</artifactId>
+    <artifactId>juniemvc-jt</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>juniemvc</name>
-    <description>juniemvc</description>
+    <name>juniemvc-jt</name>
+    <description>juniemvc-jt</description>
 
     <properties>
         <java.version>21</java.version>
