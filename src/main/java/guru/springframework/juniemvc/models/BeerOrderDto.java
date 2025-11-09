@@ -23,7 +23,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class BeerOrderDto extends BaseEntityDto {
 
-    //reference information from customer
+    //reference information from a customer
     private String customerRef;
     
     @NotNull(message = "Payment amount is required")
