@@ -1,0 +1,63 @@
+parameters:
+  - name: id
+    in: path
+    required: true
+    description: The ID of the beer order.
+    schema:
+      type: integer
+      format: int32
+get:
+  tags:
+    - BeerOrder
+  summary: Get beer order by ID
+  description: Retrieve a beer order by its ID.
+  operationId: getBeerOrderById
+  security:
+    - api_key: []
+  responses:
+    '200':
+      description: Beer order retrieved successfully.
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/BeerOrderDto.yaml'
+    '404':
+      $ref: '../components/responses/Problem.yaml'
+put:
+  tags:
+    - BeerOrder
+  summary: Update beer order by ID
+  description: Update an existing beer order by its ID.
+  operationId: updateBeerOrder
+  security:
+    - api_key: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/BeerOrderDto.yaml'
+  responses:
+    '200':
+      description: Beer order updated successfully.
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/BeerOrderDto.yaml'
+    '400':
+      $ref: '../components/responses/Problem.yaml'
+    '404':
+      $ref: '../components/responses/Problem.yaml'
+delete:
+  tags:
+    - BeerOrder
+  summary: Delete beer order by ID
+  description: Delete a beer order by its ID.
+  operationId: deleteBeerOrder
+  security:
+    - api_key: []
+  responses:
+    '204':
+      description: Beer order deleted successfully. No content returned.
+    '404':
+      $ref: '../components/responses/Problem.yaml'

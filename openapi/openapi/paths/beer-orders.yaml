@@ -1,0 +1,42 @@
+get:
+  tags:
+    - BeerOrder
+  summary: List beer orders
+  description: Retrieve all beer orders.
+  operationId: listBeerOrders
+  security:
+    - api_key: []
+  responses:
+    '200':
+      description: Successfully retrieved the list of beer orders.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../components/schemas/BeerOrderDto.yaml'
+    '400':
+      $ref: '../components/responses/Problem.yaml'
+post:
+  tags:
+    - BeerOrder
+  summary: Create a beer order
+  description: Create a new beer order.
+  operationId: createBeerOrder
+  security:
+    - api_key: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/BeerOrderDto.yaml'
+  responses:
+    '201':
+      description: Beer order created.
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/BeerOrderDto.yaml'
+    '400':
+      $ref: '../components/responses/Problem.yaml'
