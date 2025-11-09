@@ -13,7 +13,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -41,7 +40,7 @@ class BeerOrderMapperTest {
                 .build();
         testBeer.setId(1);
 
-        // Create test beer order
+        // Create a test beer order
         testBeerOrder = BeerOrder.builder()
                 .customerRef("Test Customer")
                 .paymentAmount(new BigDecimal("25.98"))
@@ -51,7 +50,7 @@ class BeerOrderMapperTest {
         testBeerOrder.setCreatedDate(LocalDateTime.now());
         testBeerOrder.setUpdateDate(LocalDateTime.now());
 
-        // Create test beer order line
+        // Create a test beer order line
         BeerOrderLine testBeerOrderLine = BeerOrderLine.builder()
                 .orderQuantity(2)
                 .quantityAllocated(2)
@@ -60,7 +59,7 @@ class BeerOrderMapperTest {
                 .build();
         testBeerOrderLine.setId(1);
 
-        // Add beer order line to beer order
+        // Add a beer order line to beer order
         testBeerOrder.addBeerOrderLine(testBeerOrderLine);
     }
 

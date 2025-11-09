@@ -31,7 +31,7 @@ class BeerOrderLineMapperTest {
                 .build();
         testBeer.setId(1);
         
-        // Create test beer order line
+        // Create a test beer order line
         testBeerOrderLine = BeerOrderLine.builder()
                 .orderQuantity(2)
                 .quantityAllocated(2)
